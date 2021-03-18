@@ -1,0 +1,39 @@
+Parameters:
+  LatestAmiID:
+    Description: Latest free tier grade amazon machine image.
+    Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
+    AllowedValues: ['/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2']
+    Default: '/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2'
+
+  InstanceType:
+    Description: Type of the machine which will be used for this instance.
+    AllowedValues: [t2.nano, t2.micro]
+    Default: t2.micro
+    Type: String
+
+  KeyName:
+    Description: Key pair for accessing the machine.
+    Default: ssh_key_default
+    Type: 'AWS::EC2::KeyPair::KeyName'
+
+Outputs:
+  ID:
+    Description: Instance id
+    Value: !Ref EC2Instance
+  DNS:
+    Description: DNS name
+    Value: !GetAtt EC2Instance.PublicDnsName
+  IpAddress:
+    Description: Public IP address
+    Value: !GetAtt EC2Instance.PublicIp
+
+Resources:
+  EC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: !Ref LatestAmiID
+      KeyName: !Ref KeyName
+      InstanceType: !Ref InstanceType
+      Tags:
+        - Key: "aws_course"
+          Value: ""
