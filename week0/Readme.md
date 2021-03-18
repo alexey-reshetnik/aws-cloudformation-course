@@ -12,9 +12,13 @@ Cloudformation script for single EC2 instance.
  - dns name of instance
  - public IP address
 
-###### Command for AWS stack creation:
+###### Command for creating AWS stack from given template:
 
 aws cloudformation create-stack --stack-name weekZeroDefaultParams --template-body file://ec2.yaml
+
+###### Command for validating created template for syntax errors:
+
+aws cloudformation validate-template --template-body file://ec2.yaml
 
 ###### Command for checking stack deployment status:
 
